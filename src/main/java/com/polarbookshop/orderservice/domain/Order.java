@@ -1,4 +1,4 @@
-package com.polarbookshop.orderservice.order.domain;
+package com.polarbookshop.orderservice.domain;
 
 import java.time.Instant;
 
@@ -30,8 +30,10 @@ public record Order (
         int version
 ){
 
-    public static Order of(String bookIsbn, String bookName, Double bookPrice, Integer quantity, OrderStatus status) {
-        return new Order(null, bookIsbn, bookName, bookPrice, quantity, status, null, null, 0);
+    public static Order of(String bookIsbn, String bookName, Double bookPrice,
+     Integer quantity, OrderStatus status) {
+        return new Order(null, bookIsbn, bookName, bookPrice,
+         quantity, status, null, null, 0);
     }
 
 }
