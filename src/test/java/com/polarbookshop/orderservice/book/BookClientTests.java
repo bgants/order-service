@@ -57,10 +57,11 @@ class BookClientTests {
 		mockWebServer.enqueue(mockResponse);
 
 		Mono<Book> book = bookClient.getBookByIsbn(bookIsbn);
-
+				
 		StepVerifier.create(book)
-				.expectComplete();
-	}
+        		.expectNextMatches(b -> b.isbn().equals(bookIsbn))
+        		.verifyComplete();
+  	}
 
 	@Test
 	void whenBookNotExistsThenReturnEmpty() {
