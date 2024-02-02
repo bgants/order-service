@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+  labels:
+    app: order-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-service
+  template:
+    metadata:
+      labels:
+        app: order-service
+    spec:
+      containers:     
+        - name: order-service
+          image: localhost:32000/order-service:latest
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            #makes k8s wait 5 secs before sending SIGTERM signal to pod
+            preStop:
+              exec:
+                command: [ "sh", "-c", "sleep 5" ]
+          ports:
+            - containerPort: 9002
+          env:
+            - name: BPL_JVM_THREAD_COUNT
+              value: "50"
+            - name: SPRING_R2DBC_URL
+              value: r2dbc:postgresql://polar-postgres:5432/polardb_order
+            - name: SPRING_FLYWAY_URL
+              value: jdbc:postgresql://polar-postgres:5432/polardb_order
+            - name: SPRING_CATALOG_SERVICE_URI
+              value: http://catalog-service
+            - name: SPRING_CLOUD_CONFIG_URI
+              value: http://config-service
+            - name: SPRING_RABBITMQ_HOST
+              value: polar-rabbitmq

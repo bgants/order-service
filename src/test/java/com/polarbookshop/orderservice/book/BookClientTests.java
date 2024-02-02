@@ -16,6 +16,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
+/*
+ * To prevent unwanted execution dependencies,
+ * you can annotate the test class with
+ * @TestMethodOrder(MethodOrderer.Random.class)
+ * to ensure that a pseudo-random order is used at each execution.
+ */
 @TestMethodOrder(MethodOrderer.Random.class)
 class BookClientTests {
 
